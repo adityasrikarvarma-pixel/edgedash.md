@@ -1,0 +1,166 @@
+﻿# EdgeDash Configuration
+# Edit this file with your target profile and preferences.
+
+target_role: "Data Analyst"
+target_city: "Bengaluru"
+keywords:
+  - "data analyst"
+  - "analytics"
+  - "sql"
+  - "python"
+  - "tableau"
+  - "power bi"
+
+my_skills:
+  - "Python"
+  - "SQL"
+  - "Excel"
+  - "Tableau"
+  - "Power BI"
+  - "Statistics"
+
+experience_years: 4
+
+# SQLite database file path (relative to repo root)
+db_path: "./edgedash.db"
+
+# Minimum fit score (0-100) to surface a listing
+min_fit_score: 60
+
+# Enabled job sources
+sources:
+  - "arbeitnow"
+
+# Set to true to use mock data instead of real APIs (for development)
+use_mock_fetcher: false
+
+# LLM settings (scoring and intelligence)
+llm_provider: "ollama"  # "gemini" or "ollama"
+llm_model: "llama3.2"
+llm_batch_size: 25  # Max listings to score per cycle
+
+# Scoring weights (must sum to 1.0 — tune these to match your priorities)
+# skill_match:   fraction of required skills you have (nice-to-have count at 1/3)
+# seniority_fit: distance from target_seniority on the junior→mid→senior→lead scale
+# location_fit:  remote OK, city match, unknown, or elsewhere
+# recency:       linear decay from 1.0 (today) to 0.0 (30 days old)
+target_seniority: "mid"      # one of: junior, mid, senior, lead
+score_weight_skill:      0.45
+score_weight_seniority:  0.25
+score_weight_location:   0.15
+score_weight_recency:    0.15
+score_batch_size: 25          # Max listings to score per cycle
+
+# ---------------------------------------------------------------------------
+# Orchestration thresholds (Rule 29 — the Orchestrator sets all limits)
+# ---------------------------------------------------------------------------
+fetch_interval_hours: 6       # Fetch if last fetch was >= this many hours ago
+fetch_max_pages: 5            # Stop condition for Fetcher
+fetch_max_listings: 200       # Stop condition for Fetcher
+
+score_max_seconds: 300        # Stop condition for Scorer (seconds)
+
+analyse_max_seconds: 120      # Stop condition for GapAnalyzer (seconds)
+
+# ---------------------------------------------------------------------------
+# Skill alias map  (Rule 23)
+# This map is YOURS to edit. Adding entries is expected as you see your data.
+# Run:  python -m edgedash.skills --audit   to find missing aliases.
+#
+# Format:  raw form (lowercase) : canonical name
+# The canonical name is what appears in gap reports and the dashboard.
+# ---------------------------------------------------------------------------
+skill_aliases:
+  # Kubernetes shorthand
+  k8s: kubernetes
+
+  # Node is NOT javascript — keep them separate
+  node: node
+  nodejs: node
+  node.js: node
+
+  # Postgres variants
+  postgres: postgres
+  postgresql: postgres
+  psql: postgres
+
+  # Google Cloud variants
+  gcp: gcp
+  google cloud: gcp
+  google cloud platform: gcp
+
+  # Machine learning shorthand
+  ml: machine learning
+
+  # CI/CD variants (the slash is the canonical form)
+  ci/cd: ci/cd
+  ci cd: ci/cd
+  cicd: ci/cd
+
+  # Common data-role aliases
+  powerbi: power bi
+  power-bi: power bi
+  ms excel: excel
+  microsoft excel: excel
+  ms sql: sql server
+  mssql: sql server
+  microsoft sql server: sql server
+  t-sql: sql server
+  tsql: sql server
+  bigquery: bigquery
+  bq: bigquery
+  looker studio: looker studio
+  google data studio: looker studio
+  spss: spss
+  r language: r
+  r programming: r
+
+  # Python ecosystem
+  pandas: pandas
+  numpy: numpy
+  scikit-learn: scikit-learn
+  sklearn: scikit-learn
+  matplotlib: matplotlib
+  seaborn: seaborn
+
+  # Cloud / infra
+  aws: aws
+  amazon web services: aws
+  azure: azure
+  microsoft azure: azure
+  gke: kubernetes   # Google Kubernetes Engine is still kubernetes skill
+
+  # Version control
+  git: git
+  github: git
+  gitlab: git
+
+  # General shorthand
+  nlp: nlp
+  natural language processing: nlp
+  etl: etl
+  extract transform load: etl
+  restful api: rest api
+  rest apis: rest api
+  rest: rest api
+  api: rest api
+  # ── Added after first audit run ──────────────────────────────────────────
+  # kubernetes/nomad: compound slug from extractor; the tested skill is k8s
+  kubernetes/nomad: kubernetes
+
+  # gitlab ci/cd: platform-qualified variant; the gap skill is ci/cd
+  gitlab ci/cd: ci/cd
+
+  # ms-office: hyphenated form seen in extracted data
+  ms-office: ms office
+  microsoft office: ms office
+
+  # SQL Server with version stamps — all map to the same skill
+  microsoft sql server 2012: sql server
+  microsoft sql server 2016: sql server
+  microsoft sql server 2019: sql server
+
+  # next.js: canonical is next.js — do NOT merge into javascript
+  next.js: next.js
+  nextjs: next.js
+
